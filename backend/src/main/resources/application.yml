@@ -1,0 +1,51 @@
+spring:
+  application:
+    name: monitoramento
+  datasource:
+    url: jdbc:postgresql://localhost:5432/monitoramento
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+    show-sql: false
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
+    locations: classpath:db/migration
+server:
+  port: 8080
+
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    operationsSorter: method
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+
+app:
+  jwt:
+    secret: 404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970
+    expiration-ms: 86400000 # 24 horas
+  monitoring:
+    internet:
+      default-timeout-ms: 5000
+      default-period-seconds: 60
+    disk:
+      default-period-seconds: 120
+      default-alert-threshold-percent: 85
+    camera:
+      default-period-seconds: 180
+      ping-timeout-ms: 2000
+      rtsp-timeout-ms: 5000
